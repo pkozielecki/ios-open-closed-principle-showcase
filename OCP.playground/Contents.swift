@@ -17,3 +17,12 @@ let background = Image("sprintReportBackground")
 let betterReportPrinter = BetterReportPrinter()
 let betterSprintReport = await betterReportPrinter.printReport(sprint: sprint, backgroundImage: background)
 
+/// --------------------------------------------------------------------------------------------
+/// Stage 3 - New case: employee evaluation -> new function (with optional BG).
+/// --------------------------------------------------------------------------------------------
+
+let employeeEvaluation = EmployeeEvaluation(emloyeeName: "John Doe", evaluationPeriodStart: .init("01/01/2024"), evaluationPeriodFinish: .init("01/07/2024"), overallPerformance: 5.0, communication: 5.0, engagement: 5.0)
+let evenBetterReportPrinter = EvenBetterReportPrinter()
+let betterReportPDF = await evenBetterReportPrinter.printReport(employeeEvaluation: employeeEvaluation)
+
+
