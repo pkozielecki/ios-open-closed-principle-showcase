@@ -25,4 +25,11 @@ let employeeEvaluation = EmployeeEvaluation(emloyeeName: "John Doe", evaluationP
 let evenBetterReportPrinter = EvenBetterReportPrinter()
 let betterReportPDF = await evenBetterReportPrinter.printReport(employeeEvaluation: employeeEvaluation)
 
+/// --------------------------------------------------------------------------------------------
+/// Stage 4 - New case: financial reports -> new function with optional styling.
+/// --------------------------------------------------------------------------------------------
+
+let financialData = QuaterlyFinancialData(quarter: 3, year: 2024, totalIncome: 100, totalExpenses: 20)
+let evenMoreExtendedReportPrinter = ReportPrinterExtendedEvenMore()
+let enenBetterReportPDF = await evenMoreExtendedReportPrinter.printReport(financialData: financialData)
 
