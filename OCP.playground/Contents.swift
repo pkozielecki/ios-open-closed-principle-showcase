@@ -33,3 +33,29 @@ let financialData = QuaterlyFinancialData(quarter: 3, year: 2024, totalIncome: 1
 let evenMoreExtendedReportPrinter = ReportPrinterExtendedEvenMore()
 let enenBetterReportPDF = await evenMoreExtendedReportPrinter.printReport(financialData: financialData)
 
+/// --------------------------------------------------------------------------------------------
+/// Stage 5 - No longer print to the PDF - print to plain text as well. I want to die...
+/// --------------------------------------------------------------------------------------------
+
+let printStyle = PrintStyle(titleFont: .largeTitle)
+let aggregator = ReportPrintersAggregator(
+    reportPrinters: [
+        SprintCompletionPDFReportPrinter(),
+        SprintCompletionPlainTextReportPrinter()
+    ]
+)
+
+do {
+    let plainTextSprintReport: String = try await aggregator.print(report: sprint, inStyle: printStyle, intoFormat: String.self)
+    print("Sprint completion report in plain text: \(plainTextSprintReport)")
+} catch {
+    print("Print error: \(error)")
+}
+
+do {
+    let pdfSprintReport: PDF = try await aggregator.print(report: sprint, inStyle: printStyle, intoFormat: PDF.self)
+    print("Sprint completion report in PDF: \(pdfSprintReport.title ?? "")")
+} catch {
+    print("Print error: \(error)")
+}
+

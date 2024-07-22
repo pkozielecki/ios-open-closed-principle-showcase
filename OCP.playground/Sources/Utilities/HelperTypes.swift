@@ -3,10 +3,12 @@ import SwiftUI
 
 public struct PrintStyle {
     public let titleFont: Font
+    public let backgroundImage: Image?
     
-    public init(titleFont: Font) {
+    public init(titleFont: Font, backgroundImage: Image? = nil) {
         self.titleFont = titleFont
-    }    
+        self.backgroundImage = backgroundImage
+    }
 }
 
 public struct PDF {
