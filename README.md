@@ -20,6 +20,55 @@ Here’s how a simple report printer turned into a hard to maintain, rigid tool:
 
 ### Alternative solution - an OCP-complient report printer:
 
+Instead of trying to make a single tool handle all possible combination of input and output formats, let’s split it up into distinct, highly specialised printers:
+
+```swift
+protocol ReportPrinter {
+    func canPrint(report: PrintableInput, into printFormat: PrintOutputFormat.Type) -> Bool
+    func print(report: PrintableInput, style: PrintStyle) async throws -> PrintOutputFormat
+}
+```
+
+… and then aggregate them in a convenient abstraction, providing clear and easy to use API:
+
+```swift
+protocol OCPReportPrinter {    
+    public func print<Output: PrintOutputFormat>(
+	    report: any PrintableInput, 
+	    inStyle style: PrintStyle, 
+	    intoFormat printFormat: Output.Type
+	  ) async throws -> Output
+}
+```
+
+and a simple use case:
+
+```swift
+let printStyle = PrintStyle(...)
+let aggregator = ReportPrintersAggregator(
+    reportPrinters: [
+        SprintCompletionPDFReportPrinter(),
+        SprintCompletionPlainTextReportPrinter(),
+        ...
+    ]
+)
+
+do {
+    let plainTextSprintReport: String = try await aggregator.print(report: sprint, inStyle: printStyle, intoFormat: String.self)
+    // Use the printed report.
+} catch {
+    print("Print error: \(error)")
+}
+```
+
 ## Technicalities
+
 ### Requirements
-### Running the playground
+
+- Xcode 15+ (might run on lower version as well).
+- Swift 5.9+
+
+### Running the project
+
+- Check out or download the project.
+- Open the `OCP.playground` file in Xcode.
